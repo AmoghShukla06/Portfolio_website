@@ -2,7 +2,7 @@ import Link from "next/link";
 import { handel } from "@/fonts/fonts";
 export default function Landing() {
   return (
-    <section className="relative h-screen w-screen overflow-hidden">
+    <section className="relative h-screen w-full overflow-hidden">
 
       {/* Background Video */}
       <video
