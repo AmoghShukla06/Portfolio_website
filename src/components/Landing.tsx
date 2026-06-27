@@ -12,7 +12,7 @@ export default function Landing() {
         playsInline
         className="absolute inset-0 w-full h-full object-cover"
       >
-        <source src="/videos/background_theme.mp4" type="video/mp4" />
+        <source src="/videos/background_theme.webm" type="video/webm" />
       </video>
 
       {/* Dark Overlay */}
