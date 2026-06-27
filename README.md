@@ -1,36 +1,76 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Amogh Shukla — Portfolio
+
+A personal portfolio website with a Halo-inspired aesthetic: a video landing page, a metallic-black theme, glassmorphism project/experience cards, and falling glass-shard effects in the hero.
+
+Built with **Next.js 16** (App Router), **React 19**, **Tailwind CSS v4**, and **Framer Motion**.
+
+## Tech Stack
+
+- [Next.js 16](https://nextjs.org) (App Router, Turbopack)
+- [React 19](https://react.dev)
+- [Tailwind CSS v4](https://tailwindcss.com)
+- [Framer Motion](https://www.framer.com/motion/) for entrance animations
+- Local fonts (Handel Gothic, Highway Gothic) via `next/font/local`
+- TypeScript
 
 ## Getting Started
 
-First, run the development server:
+Install dependencies and run the dev server:
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Command         | Description                          |
+| --------------- | ------------------------------------ |
+| `npm run dev`   | Start the development server         |
+| `npm run build` | Create a production build            |
+| `npm run start` | Run the production build locally     |
+| `npm run lint`  | Run ESLint                           |
 
-## Learn More
+## Project Structure
 
-To learn more about Next.js, take a look at the following resources:
+```
+src/
+├── app/
+│   ├── page.tsx        # Landing page (video intro → "Jump In")
+│   ├── home/page.tsx   # Main page (Header, Hero, Projects, Experience, Footer)
+│   ├── layout.tsx      # Root layout + metadata
+│   └── globals.css     # Tailwind import, theme tokens, keyframes
+├── components/
+│   ├── Landing.tsx              # Video intro screen
+│   ├── Header.tsx              # Sticky nav with logo + social links
+│   ├── Hero.tsx               # Intro section with falling glass shards
+│   ├── GlassShards.tsx        # Animated shard overlay (hero)
+│   ├── Projects.tsx           # Glassmorphism project cards
+│   ├── Experience.tsx         # Work experience cards
+│   ├── Footer.tsx             # Social links
+│   └── MetallicBackground.tsx # Shared metallic-black backdrop
+└── fonts/                     # Local font files + config
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+public/
+├── images/   # Logo, hero background, project screenshots
+└── videos/   # Landing background video
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Customizing Content
 
-## Deploy on Vercel
+- **Projects** — edit the `projects` array in [`src/components/Projects.tsx`](src/components/Projects.tsx). Drop screenshots in `public/images/` (`project-1.jpg`, `project-2.jpg`, …).
+- **Experience** — edit the `experience` array in [`src/components/Experience.tsx`](src/components/Experience.tsx).
+- **Social links** — update the URLs in [`src/components/Header.tsx`](src/components/Header.tsx) and [`src/components/Footer.tsx`](src/components/Footer.tsx).
+- **Hero text / bio** — [`src/components/Hero.tsx`](src/components/Hero.tsx).
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Deployment
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The site is fully static and deploys to any static host. The easiest path is [Vercel](https://vercel.com/new):
+
+1. Push to GitHub.
+2. Import the repo in Vercel.
+3. Deploy (defaults work — `next build`, output detected automatically).
+
+> **Note:** the landing video (`public/videos/background_theme.webm`) is large. Consider compressing it to keep mobile load times low.
