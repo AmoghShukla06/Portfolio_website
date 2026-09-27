@@ -1,76 +1,85 @@
 # Amogh Shukla — Portfolio
 
-A personal portfolio website with a Halo-inspired aesthetic: a video landing page, a metallic-black theme, glassmorphism project/experience cards, and falling glass-shard effects in the hero.
+A personal portfolio styled after the Halo series. The landing page is a Halo-style main menu over a video loop. The main page is a HUD built from the same visual language: a shield bar that tracks reading progress, a motion tracker, chamfered Forerunner-cut panels, and a reticle cursor that turns red over anything clickable.
 
-Built with **Next.js 16** (App Router), **React 19**, **Tailwind CSS v4**, and **Framer Motion**.
+Live: [portfoliojohn117.vercel.app](https://portfoliojohn117.vercel.app)
 
-## Tech Stack
+Built with **Next.js 16** (App Router), **React 19**, **Tailwind CSS v4** and **Framer Motion**.
 
-- [Next.js 16](https://nextjs.org) (App Router, Turbopack)
-- [React 19](https://react.dev)
-- [Tailwind CSS v4](https://tailwindcss.com)
-- [Framer Motion](https://www.framer.com/motion/) for entrance animations
-- Local fonts (Handel Gothic, Highway Gothic) via `next/font/local`
-- TypeScript
+## What's on the page
 
-## Getting Started
+| Section | Halo reference | Content |
+| --- | --- | --- |
+| Main menu (`/`) | Title screen | Keyboard navigable: arrow keys or W/S to move, Enter to select |
+| Hero | Spartan dossier + motion tracker | Intro, current role, quick facts |
+| Campaign | Mission select | Projects as a list and briefing panel (arrow keys switch missions) |
+| Service record | Service record | Work experience |
+| Loadout | Weapon loadout | Languages, frameworks, AI and systems tools |
+| Comms | Comms channel | Contact links |
 
-Install dependencies and run the dev server:
+## Getting started
 
 ```bash
 npm install
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+Open [http://localhost:3000](http://localhost:3000).
 
-## Scripts
+| Command | Description |
+| --- | --- |
+| `npm run dev` | Start the development server |
+| `npm run build` | Create a production build |
+| `npm run start` | Run the production build locally |
+| `npm run lint` | Run ESLint |
 
-| Command         | Description                          |
-| --------------- | ------------------------------------ |
-| `npm run dev`   | Start the development server         |
-| `npm run build` | Create a production build            |
-| `npm run start` | Run the production build locally     |
-| `npm run lint`  | Run ESLint                           |
-
-## Project Structure
+## Project structure
 
 ```
 src/
 ├── app/
-│   ├── page.tsx        # Landing page (video intro → "Jump In")
-│   ├── home/page.tsx   # Main page (Header, Hero, Projects, Experience, Footer)
-│   ├── layout.tsx      # Root layout + metadata
-│   └── globals.css     # Tailwind import, theme tokens, keyframes
+│   ├── page.tsx               # Main menu (video + menu)
+│   ├── home/page.tsx          # Portfolio page
+│   ├── layout.tsx             # Fonts, metadata
+│   ├── opengraph-image.tsx    # Generated social preview card
+│   └── globals.css            # Tokens, panels, HUD utilities, keyframes
 ├── components/
-│   ├── Landing.tsx              # Video intro screen
-│   ├── Header.tsx              # Sticky nav with logo + social links
-│   ├── Hero.tsx               # Intro section with falling glass shards
-│   ├── GlassShards.tsx        # Animated shard overlay (hero)
-│   ├── Projects.tsx           # Glassmorphism project cards
-│   ├── Experience.tsx         # Work experience cards
-│   ├── Footer.tsx             # Social links
-│   └── MetallicBackground.tsx # Shared metallic-black backdrop
-└── fonts/                     # Local font files + config
-
-public/
-├── images/   # Logo, hero background, project screenshots
-└── videos/   # Landing background video
+│   ├── Landing.tsx            # Main menu with keyboard navigation
+│   ├── Header.tsx             # Sticky HUD bar with the shield progress meter
+│   ├── Hero.tsx               # Intro, dossier panel, boot animation
+│   ├── MotionTracker.tsx      # Radar sweep with synced contact pings
+│   ├── Projects.tsx           # Campaign: mission select + side missions
+│   ├── Schematic.tsx          # Holographic line art for projects without screenshots
+│   ├── Experience.tsx         # Service record
+│   ├── Loadout.tsx            # Skills as loadout slots
+│   ├── Footer.tsx             # Comms + credits
+│   └── GlassShards.tsx        # Falling glass shards in the hero
+├── data/portfolio.ts          # All content: projects, experience, skills, links
+└── fonts/                     # Handel Gothic, Highway Gothic + Barlow (Google)
 ```
 
-## Customizing Content
+## Editing content
 
-- **Projects** — edit the `projects` array in [`src/components/Projects.tsx`](src/components/Projects.tsx). Drop screenshots in `public/images/` (`project-1.jpg`, `project-2.jpg`, …).
-- **Experience** — edit the `experience` array in [`src/components/Experience.tsx`](src/components/Experience.tsx).
-- **Social links** — update the URLs in [`src/components/Header.tsx`](src/components/Header.tsx) and [`src/components/Footer.tsx`](src/components/Footer.tsx).
-- **Hero text / bio** — [`src/components/Hero.tsx`](src/components/Hero.tsx).
+Everything lives in [`src/data/portfolio.ts`](src/data/portfolio.ts):
 
-## Deployment
+- **Projects**: add to `missions`. Give it an `image` from `public/images/`, or pick a `schematic` kind (`chess`, `candles`, `neural`, `wireframe`, `dashboard`, `terminal`, `globe`, `converter`, `game`, `mobile`, `transit`) for generated line art.
+- **Smaller projects**: `sideMissions`.
+- **Experience**: `serviceRecord`.
+- **Skills**: `loadout`.
+- **Social links**: `links`.
 
-The site is fully static and deploys to any static host. The easiest path is [Vercel](https://vercel.com/new):
+## Design tokens
 
-1. Push to GitHub.
-2. Import the repo in Vercel.
-3. Deploy (defaults work — `next build`, output detected automatically).
+| Token | Hex | Use |
+| --- | --- | --- |
+| `void` | `#03060B` | Page background |
+| `hull` | `#0A1422` | Panel fill |
+| `holo` | `#5CD6FF` | Hologram cyan: primary accent |
+| `visor` | `#F2A93B` | Spartan visor gold: selected and active states only |
+| `ink` | `#DDE7F0` | Text |
 
-> **Note:** the landing video (`public/videos/background_theme.webm`) is large. Consider compressing it to keep mobile load times low.
+Motion respects `prefers-reduced-motion`.
+
+---
+
+Halo is a trademark of Microsoft. This is a fan-styled personal site and is not affiliated with Halo Studios. Hero background art by The Adam Taylor.

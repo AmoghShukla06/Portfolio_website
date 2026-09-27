@@ -1,29 +1,158 @@
 @import "tailwindcss";
 
+/* ===== Tokens =====
+   Always dark. Palette pulled from the Halo world:
+   void = deep space, hull = UNSC slate, holo = Cortana/hologram cyan,
+   visor = the Spartan's gold visor (selection + active states only). */
 :root {
-  /* Always dark — this is a dark-themed site, regardless of device setting */
-  --background: #050506;
-  --foreground: #ededed;
+  --void: #03060b;
+  --hull: #0a1422;
+  --hull-2: #0f1d30;
+  --holo: #5cd6ff;
+  --visor: #f2a93b;
+  --ink: #dde7f0;
+  --muted: #8397ac;
+  --line: rgba(92, 214, 255, 0.18);
+  --cut: 14px;
+
+  --background: var(--void);
+  --foreground: var(--ink);
 }
 
 @theme inline {
+  --color-void: var(--void);
+  --color-hull: var(--hull);
+  --color-hull-2: var(--hull-2);
+  --color-holo: var(--holo);
+  --color-visor: var(--visor);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+
+  --font-display: var(--font-handel);
+  --font-sans: var(--font-barlow);
+  --font-hud: var(--font-barlow-condensed);
 }
 
 html {
-  background: var(--background);
+  background: var(--void);
+  scroll-behavior: smooth;
+  scroll-padding-top: 5.5rem;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--void);
+  color: var(--ink);
+  /* Halo reticle — goes red over targets, just like in game */
+  cursor:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cg fill='none' stroke-linecap='round'%3E%3Ccircle cx='16' cy='16' r='10' stroke='%2303060b' stroke-width='3.5' stroke-dasharray='11.7 4'/%3E%3Ccircle cx='16' cy='16' r='10' stroke='%235cd6ff' stroke-width='1.5' stroke-dasharray='11.7 4'/%3E%3C/g%3E%3Ccircle cx='16' cy='16' r='2' fill='%235cd6ff' stroke='%2303060b'/%3E%3C/svg%3E")
+      16 16,
+    auto;
 }
 
-/* ===== Halo theme animations ===== */
+a,
+button,
+[role="tab"],
+label[for] {
+  cursor:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cg fill='none' stroke-linecap='round'%3E%3Ccircle cx='16' cy='16' r='10' stroke='%2303060b' stroke-width='3.5' stroke-dasharray='11.7 4'/%3E%3Ccircle cx='16' cy='16' r='10' stroke='%23ff4b3e' stroke-width='1.75' stroke-dasharray='11.7 4'/%3E%3C/g%3E%3Ccircle cx='16' cy='16' r='2.4' fill='%23ff4b3e' stroke='%2303060b'/%3E%3C/svg%3E")
+      16 16,
+    pointer;
+}
+
+::selection {
+  background: rgba(242, 169, 59, 0.35);
+  color: #fff;
+}
+
+:focus-visible {
+  outline: 2px solid var(--visor);
+  outline-offset: 3px;
+}
+
+/* ===== Forerunner-cut panels =====
+   Chamfered top-left + bottom-right. The panel's own background is the 1px
+   border colour; ::before paints the fill 1px inside it. */
+.chamfer {
+  clip-path: polygon(
+    var(--cut) 0,
+    100% 0,
+    100% calc(100% - var(--cut)),
+    calc(100% - var(--cut)) 100%,
+    0 100%,
+    0 var(--cut)
+  );
+}
+
+.panel {
+  --panel-edge: var(--line);
+  --panel-fill: linear-gradient(160deg, rgba(15, 29, 48, 0.92), rgba(6, 12, 22, 0.92));
+  position: relative;
+  isolation: isolate;
+  background: var(--panel-edge);
+}
+
+.panel::before {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  z-index: -1;
+  background: var(--panel-fill);
+  clip-path: polygon(
+    calc(var(--cut) - 0.5px) 0,
+    100% 0,
+    100% calc(100% - var(--cut) + 0.5px),
+    calc(100% - var(--cut) + 0.5px) 100%,
+    0 100%,
+    0 calc(var(--cut) - 0.5px)
+  );
+}
+
+/* Four hairline corner brackets — drop inside any positioned box */
+.brackets {
+  --b: var(--holo);
+  --s: 14px;
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(var(--b), var(--b)) top left / var(--s) 1px no-repeat,
+    linear-gradient(var(--b), var(--b)) top left / 1px var(--s) no-repeat,
+    linear-gradient(var(--b), var(--b)) top right / var(--s) 1px no-repeat,
+    linear-gradient(var(--b), var(--b)) top right / 1px var(--s) no-repeat,
+    linear-gradient(var(--b), var(--b)) bottom left / var(--s) 1px no-repeat,
+    linear-gradient(var(--b), var(--b)) bottom left / 1px var(--s) no-repeat,
+    linear-gradient(var(--b), var(--b)) bottom right / var(--s) 1px no-repeat,
+    linear-gradient(var(--b), var(--b)) bottom right / 1px var(--s) no-repeat;
+}
+
+.scanlines {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.035) 0 1px,
+    transparent 1px 3px
+  );
+  mix-blend-mode: overlay;
+}
+
+/* Faint holotable dot grid for section backdrops */
+.holo-grid {
+  background-image: radial-gradient(rgba(92, 214, 255, 0.14) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+.text-glow {
+  text-shadow:
+    0 0 24px rgba(92, 214, 255, 0.35),
+    0 0 2px rgba(92, 214, 255, 0.5);
+}
+
+/* ===== Motion ===== */
 
 /* Falling glass shards (Hero) */
 @keyframes shard-fall {
@@ -33,8 +162,45 @@ body {
   100% { transform: translateY(115vh) rotate(var(--rot-end, 360deg)); opacity: 0; }
 }
 
+/* Motion tracker sweep */
+@keyframes radar-sweep {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes blip {
+  0%, 100% { opacity: 0; transform: scale(0.6); }
+  12%      { opacity: 1; transform: scale(1); }
+  60%      { opacity: 0.25; }
+}
+
+/* Hologram flicker-on for big titles */
+@keyframes holo-on {
+  0%   { opacity: 0; filter: blur(6px); }
+  18%  { opacity: 0.8; filter: blur(0); }
+  24%  { opacity: 0.15; }
+  32%  { opacity: 0.9; }
+  38%  { opacity: 0.4; }
+  100% { opacity: 1; filter: blur(0); }
+}
+
+@keyframes schem-pulse {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.35; }
+}
+
+.radar-sweep { animation: radar-sweep 3.2s linear infinite; }
+.radar-blip  { animation: blip 3.2s ease-out infinite; }
+.holo-on     { animation: holo-on 1.4s ease-out both; }
+.schem-pulse { animation: schem-pulse 2.4s ease-in-out infinite; }
+
 @media (prefers-reduced-motion: reduce) {
-  .glass-shard {
+  html { scroll-behavior: auto; }
+  .glass-shard,
+  .radar-sweep,
+  .radar-blip,
+  .holo-on,
+  .schem-pulse {
     animation: none !important;
   }
+  .radar-blip { opacity: 0.7; }
 }
