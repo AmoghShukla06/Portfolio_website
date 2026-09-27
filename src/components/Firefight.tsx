@@ -44,7 +44,7 @@ export default function Firefight() {
         <SectionHeading
           id="firefight"
           title="Firefight"
-          lead="A Halo-style horde mode, drawn from scratch on canvas. Hold to fire, press R to reload, and hold the line for as many waves as you can."
+          lead="A Halo-style horde mode with synthesized sound, drawn from scratch on canvas. Hold to fire, R to reload, right-click or G to throw a grenade, M to mute. Hold the line as long as you can."
         />
         <div ref={anchor}>{near ? <FirefightGame /> : <Standby />}</div>
       </div>
