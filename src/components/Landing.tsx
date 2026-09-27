@@ -10,6 +10,7 @@ const menu = [
   { href: "/home#campaign", label: "Campaign", hint: "Projects" },
   { href: "/home#service-record", label: "Service record", hint: "Experience" },
   { href: "/home#loadout", label: "Loadout", hint: "Skills" },
+  { href: "/home#firefight", label: "Firefight", hint: "Mini game" },
   { href: "/home#comms", label: "Comms", hint: "Contact" },
 ];
 
@@ -53,7 +54,7 @@ export default function Landing() {
   }, [router]);
 
   return (
-    <main className="relative h-[100svh] w-full overflow-hidden bg-void">
+    <main className="relative min-h-[100svh] w-full overflow-hidden bg-void">
       <video
         autoPlay
         muted
@@ -71,8 +72,8 @@ export default function Landing() {
       <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-void/90 to-transparent" />
       <div className="scanlines opacity-70" />
 
-      <div className="relative z-10 mx-auto flex h-full max-w-7xl flex-col justify-end px-4 pb-14 sm:px-6 sm:pb-20">
-        <h1 className="holo-on font-display text-[clamp(3rem,13vw,9rem)] uppercase italic leading-[0.88] text-ink text-glow">
+      <div className="relative z-10 mx-auto flex min-h-[100svh] max-w-7xl flex-col justify-end px-4 pb-10 pt-16 sm:px-6 sm:pb-16 [@media(max-height:760px)]:pb-8">
+        <h1 className="holo-on font-display text-[clamp(2.5rem,min(13vw,14.5svh),9rem)] uppercase italic leading-[0.88] text-ink text-glow">
           Amogh
           <br />
           Shukla
@@ -84,7 +85,7 @@ export default function Landing() {
           AI engineer and CS student
         </p>
 
-        <nav aria-label="Main menu" className="mt-10 w-full max-w-md sm:mt-12">
+        <nav aria-label="Main menu" className="mt-8 w-full max-w-md sm:mt-10 [@media(max-height:760px)]:mt-6">
           <ul className="border-y border-white/10">
             {menu.map((item, i) => {
               const active = i === selected;
@@ -102,7 +103,7 @@ export default function Landing() {
                     }}
                     onMouseEnter={() => setSelected(i)}
                     onFocus={() => setSelected(i)}
-                    className={`relative flex items-baseline justify-between gap-4 py-3 pl-5 pr-4 transition-colors focus-visible:outline-none ${
+                    className={`relative flex items-baseline justify-between gap-4 py-3 pl-5 pr-4 transition-colors [@media(max-height:760px)]:py-2 focus-visible:outline-none ${
                       active
                         ? "bg-gradient-to-r from-holo/25 via-holo/10 to-transparent text-white"
                         : "text-ink/70"
@@ -130,7 +131,7 @@ export default function Landing() {
           </ul>
         </nav>
 
-        <div className="mt-8 flex flex-wrap items-center justify-between gap-4 font-hud text-sm tracking-wide text-muted">
+        <div className="mt-6 flex flex-wrap items-center justify-between gap-4 font-hud text-sm tracking-wide text-muted">
           <p>A portfolio inspired by the Halo series</p>
           <p className="hidden items-center gap-5 sm:flex" aria-hidden="true">
             <span className="flex items-center gap-2">

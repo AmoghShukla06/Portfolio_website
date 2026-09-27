@@ -11,6 +11,7 @@ const nav = [
   { href: "#campaign", id: "campaign", label: "Projects" },
   { href: "#service-record", id: "service-record", label: "Experience" },
   { href: "#loadout", id: "loadout", label: "Skills" },
+  { href: "#firefight", id: "firefight", label: "Play" },
   { href: "#comms", id: "comms", label: "Contact" },
 ];
 

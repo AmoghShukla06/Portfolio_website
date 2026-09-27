@@ -62,7 +62,7 @@ export default function Hero() {
         <div className="lg:col-span-7">
           <motion.h1
             variants={wipe}
-            className="font-display text-[clamp(3.4rem,11vw,8.75rem)] uppercase leading-[0.86] text-ink text-glow"
+            className="font-display text-[clamp(3rem,min(11vw,15svh),8.75rem)] uppercase leading-[0.86] text-ink text-glow"
           >
             Amogh
             <br />

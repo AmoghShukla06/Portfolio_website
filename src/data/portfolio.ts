@@ -1,4 +1,14 @@
+import type { StaticImageData } from "next/image";
 import type { SchematicKind } from "@/components/Schematic";
+import academicGuruShot from "../../public/images/project-1.jpg";
+import chessShot from "../../public/images/project-2.jpg";
+import forteShot from "../../public/images/project-3.jpg";
+import quantforgeShot from "../../public/images/projects/quantforge.jpg";
+import cpAnalyzerShot from "../../public/images/projects/cp-analyzer.jpg";
+import threadAnalyzerShot from "../../public/images/projects/thread-analyzer.jpg";
+import zeusShot from "../../public/images/projects/zeus-prompter.jpg";
+import jyotishShot from "../../public/images/projects/jyotish-ji.jpg";
+import nyHairShot from "../../public/images/projects/ny-hair-company.jpg";
 
 export type Mission = {
   id: string;
@@ -12,7 +22,7 @@ export type Mission = {
   repoUrl: string | null;
   liveUrl: string | null;
   liveLabel?: string;
-  image?: string;
+  image?: StaticImageData | string;
   schematic: SchematicKind;
   note?: string;
 };
@@ -36,7 +46,7 @@ export const missions: Mission[] = [
     repoUrl: "https://github.com/AmoghShukla06/ChessEngine",
     liveUrl: "https://github.com/AmoghShukla06/ChessEngine/releases/tag/v1.0",
     liveLabel: "Download v1.0",
-    image: "/images/project-2.jpg",
+    image: chessShot,
     schematic: "chess",
   },
   {
@@ -56,6 +66,7 @@ export const missions: Mission[] = [
     repoUrl: "https://github.com/AmoghShukla06/tradingApp",
     liveUrl: "https://algo-builder-8lpi.vercel.app/",
     liveLabel: "Open live app",
+    image: quantforgeShot,
     schematic: "candles",
   },
   {
@@ -74,7 +85,7 @@ export const missions: Mission[] = [
     year: "2026",
     repoUrl: "https://github.com/AmoghShukla06/PageForge",
     liveUrl: null,
-    image: "/images/project-3.jpg",
+    image: forteShot,
     schematic: "wireframe",
   },
   {
@@ -93,6 +104,7 @@ export const missions: Mission[] = [
     year: "2026",
     repoUrl: "https://github.com/AmoghShukla06/ZeusPrompter",
     liveUrl: null,
+    image: zeusShot,
     schematic: "neural",
   },
   {
@@ -111,6 +123,7 @@ export const missions: Mission[] = [
     year: "2026",
     repoUrl: "https://github.com/AmoghShukla06/Code_Analyzer",
     liveUrl: null,
+    image: cpAnalyzerShot,
     schematic: "terminal",
   },
   {
@@ -129,6 +142,7 @@ export const missions: Mission[] = [
     year: "2026",
     repoUrl: "https://github.com/AmoghShukla06/threadAnalyzer",
     liveUrl: null,
+    image: threadAnalyzerShot,
     schematic: "dashboard",
   },
   {
@@ -147,6 +161,7 @@ export const missions: Mission[] = [
     year: "2026",
     repoUrl: "https://github.com/AmoghShukla06/Jyotish-Ji",
     liveUrl: null,
+    image: jyotishShot,
     schematic: "mobile",
   },
   {
@@ -165,6 +180,7 @@ export const missions: Mission[] = [
     year: "2026",
     repoUrl: null,
     liveUrl: null,
+    image: nyHairShot,
     schematic: "wireframe",
     note: "Client repository — source is private.",
   },
@@ -185,7 +201,7 @@ export const missions: Mission[] = [
     repoUrl: null,
     liveUrl: "https://www.theacademicguru.org",
     liveLabel: "Visit site",
-    image: "/images/project-1.jpg",
+    image: academicGuruShot,
     schematic: "wireframe",
   },
 ];

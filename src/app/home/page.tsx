@@ -4,6 +4,7 @@ import Hero from "@/components/Hero";
 import Projects from "@/components/Projects";
 import Experience from "@/components/Experience";
 import Loadout from "@/components/Loadout";
+import Firefight from "@/components/Firefight";
 import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
@@ -25,6 +26,7 @@ export default function Home() {
         <Projects />
         <Experience />
         <Loadout />
+        <Firefight />
       </main>
       <Footer />
     </>

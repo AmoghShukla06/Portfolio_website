@@ -8,39 +8,50 @@ import SectionHeading from "@/components/SectionHeading";
 import { Chevron, ExternalIcon, GitHubIcon } from "@/components/Icons";
 import { missions, sideMissions, type Mission } from "@/data/portfolio";
 
-function Visual({ mission, uid }: { mission: Mission; uid: string }) {
-  return (
-    <div className="chamfer relative aspect-video overflow-hidden bg-hull [--cut:18px]">
-      {mission.image ? (
-        <>
-          <Image
-            src={mission.image}
-            alt={`Screenshot of ${mission.title}`}
-            fill
-            sizes="(min-width: 1024px) 55vw, 100vw"
-            className="object-cover object-top saturate-[0.8]"
-          />
-          {/* tint the feed so it sits inside the hologram */}
-          <div className="absolute inset-0 bg-gradient-to-t from-void/70 via-transparent to-holo/10" />
-        </>
-      ) : (
-        <div className="holo-grid absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(92,214,255,0.08),transparent_70%)]">
-          <Schematic kind={mission.schematic} uid={uid} className="h-full w-full" />
-        </div>
-      )}
-      <div className="scanlines" />
-      <div className="brackets m-3 opacity-70" />
-      <span className="absolute bottom-3 right-4 font-hud text-xs tracking-[0.14em] text-holo/80">
-        {mission.category} / {mission.year}
-      </span>
+// One project's feed: its screenshot, or holographic line art when there isn't one.
+function VisualLayer({ mission, uid, eager = false }: { mission: Mission; uid: string; eager?: boolean }) {
+  return mission.image ? (
+    <>
+      <Image
+        src={mission.image}
+        alt={`Screenshot of ${mission.title}`}
+        fill
+        sizes="(min-width: 1024px) 55vw, 100vw"
+        placeholder={typeof mission.image === "string" ? "empty" : "blur"}
+        loading={eager ? "eager" : "lazy"}
+        className="object-cover object-top saturate-[0.85]"
+      />
+      {/* tint the feed so it sits inside the hologram */}
+      <div className="absolute inset-0 bg-gradient-to-t from-void/60 via-transparent to-holo/10" />
+    </>
+  ) : (
+    <div className="holo-grid absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(92,214,255,0.08),transparent_70%)]">
+      <Schematic kind={mission.schematic} uid={uid} className="h-full w-full" />
     </div>
   );
 }
 
-function Briefing({ mission, uid }: { mission: Mission; uid: string }) {
+function VisualFrame({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <div className="chamfer relative aspect-video overflow-hidden bg-hull [--cut:18px]">
+      {children}
+      <div className="scanlines" />
+      <div className="brackets m-3 opacity-70" />
+      <span className="absolute bottom-3 right-4 font-hud text-xs tracking-[0.14em] text-holo/80">{label}</span>
+    </div>
+  );
+}
+
+const feedLabel = (m: Mission) => `${m.category} / ${m.year}`;
+
+function Briefing({ mission, uid, withVisual = true }: { mission: Mission; uid: string; withVisual?: boolean }) {
   return (
     <div>
-      <Visual mission={mission} uid={uid} />
+      {withVisual && (
+        <VisualFrame label={feedLabel(mission)}>
+          <VisualLayer mission={mission} uid={uid} eager />
+        </VisualFrame>
+      )}
 
       <div className="mt-7">
         <h3 className="font-display text-3xl text-ink sm:text-4xl">{mission.title}</h3>
@@ -195,6 +206,20 @@ export default function Projects() {
             aria-labelledby={`tab-${current.id}`}
             className="relative lg:sticky lg:top-24 lg:self-start"
           >
+            {/* Every feed stays mounted, so screenshots preload and switching is instant */}
+            <VisualFrame label={feedLabel(current)}>
+              {missions.map((m, i) => (
+                <div
+                  key={m.id}
+                  aria-hidden={i !== selected}
+                  className={`absolute inset-0 transition-opacity duration-300 ${
+                    i === selected ? "opacity-100" : "pointer-events-none opacity-0"
+                  }`}
+                >
+                  <VisualLayer mission={m} uid={`desk-${m.id}`} />
+                </div>
+              ))}
+            </VisualFrame>
             <AnimatePresence mode="wait" initial={false}>
               <motion.div
                 key={current.id}
@@ -203,7 +228,7 @@ export default function Projects() {
                 exit={{ opacity: 0, x: -10, filter: "blur(4px)" }}
                 transition={{ duration: 0.28, ease: "easeOut" }}
               >
-                <Briefing mission={current} uid="desk" />
+                <Briefing mission={current} uid="desk" withVisual={false} />
               </motion.div>
             </AnimatePresence>
           </div>
