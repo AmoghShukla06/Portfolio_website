@@ -14,12 +14,6 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <>
-      <a
-        href="#campaign"
-        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-20 focus:z-[60] focus:bg-visor focus:px-4 focus:py-2 focus:text-void"
-      >
-        Skip to projects
-      </a>
       <Header />
       <main>
         <Hero />

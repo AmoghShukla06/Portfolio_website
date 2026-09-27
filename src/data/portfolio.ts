@@ -8,7 +8,6 @@ import cpAnalyzerShot from "../../public/images/projects/cp-analyzer.jpg";
 import threadAnalyzerShot from "../../public/images/projects/thread-analyzer.jpg";
 import zeusShot from "../../public/images/projects/zeus-prompter.jpg";
 import jyotishShot from "../../public/images/projects/jyotish-ji.jpg";
-import nyHairShot from "../../public/images/projects/ny-hair-company.jpg";
 
 export type Mission = {
   id: string;
@@ -163,26 +162,6 @@ export const missions: Mission[] = [
     liveUrl: null,
     image: jyotishShot,
     schematic: "mobile",
-  },
-  {
-    id: "ny-hair-company",
-    title: "NY Hair Company",
-    tagline: "Salon website rebuilt in Next.js, migrated off WordPress",
-    description:
-      "Client work: a Las Vegas salon's site moved from WordPress and Elementor to Next.js 16, with content kept as typed modules. A scraper pulled 55 posts and their images from the WordPress REST API, stripping scripts and builder markup, and every legacy URL is redirected to protect search ranking.",
-    objectives: [
-      "55 posts migrated by a WordPress REST scraper",
-      "Every legacy URL redirected for SEO",
-      "Server-action contact form sending through Resend",
-    ],
-    loadout: ["Next.js 16", "React 19", "Tailwind v4", "Playwright", "Resend"],
-    category: "Client web",
-    year: "2026",
-    repoUrl: null,
-    liveUrl: null,
-    image: nyHairShot,
-    schematic: "wireframe",
-    note: "Client repository — source is private.",
   },
   {
     id: "academic-guru",

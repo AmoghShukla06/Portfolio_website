@@ -15,6 +15,7 @@ Built with **Next.js 16** (App Router), **React 19**, **Tailwind CSS v4** and **
 | Campaign | Mission select | Projects as a list and briefing panel (arrow keys switch missions) |
 | Service record | Service record | Work experience |
 | Loadout | Weapon loadout | Languages, frameworks, AI and systems tools |
+| Firefight | Horde mode | Canvas mini game: grunts, jackals, drones and elites, shields, grenades, medals and synthesized sound. Loaded only when you scroll near it |
 | Comms | Comms channel | Contact links |
 
 ## Getting started
@@ -52,6 +53,9 @@ src/
 │   ├── Schematic.tsx          # Holographic line art for projects without screenshots
 │   ├── Experience.tsx         # Service record
 │   ├── Loadout.tsx            # Skills as loadout slots
+│   ├── Firefight.tsx          # Lazy-loading wrapper for the mini game
+│   ├── FirefightGame.tsx      # Canvas horde-mode game
+│   ├── firefightAudio.ts      # Web Audio synthesized sound effects
 │   ├── Footer.tsx             # Comms + credits
 │   └── GlassShards.tsx        # Falling glass shards in the hero
 ├── data/portfolio.ts          # All content: projects, experience, skills, links

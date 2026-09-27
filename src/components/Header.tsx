@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion, useScroll, useSpring } from "framer-motion";
 import { GitHubIcon, LinkedInIcon } from "@/components/Icons";
 import { links } from "@/data/portfolio";
@@ -52,6 +52,31 @@ function ShieldBar() {
   );
 }
 
+// Keyboard-only shortcut. It hides again once used or once the page scrolls,
+// so it never lingers on screen after a click.
+function SkipLink() {
+  const ref = useRef<HTMLAnchorElement>(null);
+
+  useEffect(() => {
+    const onScroll = () => {
+      if (document.activeElement === ref.current) ref.current?.blur();
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  return (
+    <a
+      ref={ref}
+      href="#campaign"
+      onClick={(e) => e.currentTarget.blur()}
+      className="sr-only focus-visible:not-sr-only focus-visible:fixed focus-visible:left-4 focus-visible:top-20 focus-visible:z-[60] focus-visible:bg-visor focus-visible:px-4 focus-visible:py-2 focus-visible:font-hud focus-visible:text-void"
+    >
+      Skip to projects
+    </a>
+  );
+}
+
 export default function Header() {
   const [active, setActive] = useState<string>("");
 
@@ -73,6 +98,7 @@ export default function Header() {
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-line bg-void/70 backdrop-blur-md">
+      <SkipLink />
       <div className="mx-auto grid h-16 max-w-7xl grid-cols-[1fr_auto_1fr] items-center gap-4 px-4 sm:px-6">
         <Link
           href="/"
