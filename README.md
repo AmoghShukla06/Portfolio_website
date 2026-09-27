@@ -1,6 +1,6 @@
 # Amogh Shukla — Portfolio
 
-A personal portfolio styled after the Halo series. The landing page is a Halo-style main menu over a video loop. The main page is a HUD built from the same visual language: a shield bar that tracks reading progress, a motion tracker, chamfered Forerunner-cut panels, and a reticle cursor that turns red over anything clickable.
+A personal portfolio styled after the Halo series. The landing page is a Halo-style main menu over a video loop. The main page is a HUD built from the same visual language: a shield bar that tracks reading progress, chamfered Forerunner-cut panels, and a reticle cursor that turns red over anything clickable.
 
 Live: [portfoliojohn117.vercel.app](https://portfoliojohn117.vercel.app)
 
@@ -11,7 +11,7 @@ Built with **Next.js 16** (App Router), **React 19**, **Tailwind CSS v4** and **
 | Section | Halo reference | Content |
 | --- | --- | --- |
 | Main menu (`/`) | Title screen | Keyboard navigable: arrow keys or W/S to move, Enter to select |
-| Hero | Spartan dossier + motion tracker | Intro, current role, quick facts |
+| Hero | Spartan dossier | Intro, current role, quick facts |
 | Campaign | Mission select | Projects as a list and briefing panel (arrow keys switch missions) |
 | Service record | Service record | Work experience |
 | Loadout | Weapon loadout | Languages, frameworks, AI and systems tools |
@@ -48,7 +48,6 @@ src/
 │   ├── Landing.tsx            # Main menu with keyboard navigation
 │   ├── Header.tsx             # Sticky HUD bar with the shield progress meter
 │   ├── Hero.tsx               # Intro, dossier panel, boot animation
-│   ├── MotionTracker.tsx      # Radar sweep with synced contact pings
 │   ├── Projects.tsx           # Campaign: mission select + side missions
 │   ├── Schematic.tsx          # Holographic line art for projects without screenshots
 │   ├── Experience.tsx         # Service record

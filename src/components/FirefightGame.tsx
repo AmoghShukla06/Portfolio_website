@@ -1410,6 +1410,7 @@ export default function FirefightGame() {
     const onDown = (e: PointerEvent) => {
       if (phaseRef.current !== "playing") return;
       e.preventDefault();
+      initAudio();
       setPos(e);
       if (e.button === 2) { throwGrenade(g); return; }
       if (e.button !== 0) return;
@@ -1543,8 +1544,14 @@ export default function FirefightGame() {
           <button type="button" onClick={pause} className={smallBtn}>
             Pause
           </button>
-          <button type="button" onClick={toggleSound} aria-pressed={!muted} className={smallBtn}>
-            {muted ? "Sound off" : "Sound on"}
+          <button
+            type="button"
+            onClick={toggleSound}
+            aria-pressed={muted}
+            aria-label={muted ? "Unmute sound" : "Mute sound"}
+            className={`${smallBtn} ${muted ? "text-visor" : ""}`}
+          >
+            {muted ? "Unmute" : "Mute"}
           </button>
           <button type="button" onClick={grenade} className={smallBtn}>
             Grenade
@@ -1564,6 +1571,9 @@ export default function FirefightGame() {
                 <p className="font-hud text-sm uppercase tracking-widest text-visor">Best {summary.best.toLocaleString("en-US")}</p>
               )}
               <button type="button" onClick={start} className={`mt-2 ${btn}`}>Start firefight</button>
+              <p className="font-hud text-sm tracking-wide text-muted">
+                {muted ? "Sound is muted. Press M or Unmute during play." : "Sound on. Turn your volume up."}
+              </p>
             </>
           )}
           {phase === "paused" && (

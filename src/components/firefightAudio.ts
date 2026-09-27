@@ -43,8 +43,9 @@ interface Voice {
 type Recipe = (v: Voice, t: number) => void;
 type Pt = readonly [number, number];
 
-const MUTE_KEY = "firefight-muted";
-const MASTER = 0.5;
+// v2: the old toggle was easy to mis-click, so earlier saved mutes are ignored
+const MUTE_KEY = "firefight-sound-muted-v2";
+const MASTER = 0.9;
 const MAX_VOICES = 24;
 const EPS = 0.0001;
 const THROTTLE_MS: Partial<Record<Sfx, number>> = { rifle: 70, enemyHit: 50 };
@@ -56,6 +57,8 @@ let active = 0;
 let mutedCache: boolean | null = null;
 let alarmOn = false;
 let alarmTimer: number | null = null;
+// True only while the game is paused; otherwise a suspended context is woken up on demand
+let userSuspended = false;
 const lastAt: Partial<Record<Sfx, number>> = {};
 
 const clamp = (x: number, lo: number, hi: number): number => Math.min(hi, Math.max(lo, x));
@@ -357,7 +360,7 @@ function newVoice(vol: number, pan: number, rate: number): Voice | null {
 function startAlarm(): void {
   if (alarmTimer !== null || typeof window === "undefined" || !ctx || isMuted()) return;
   const beep = (): void => {
-    if (!ctx || ctx.state !== "running" || isMuted()) return;
+    if (!ctx || ctx.state === "closed" || userSuspended || isMuted()) return;
     const v = newVoice(1, 0, 1);
     if (!v) return;
     const t = ctx.currentTime + 0.005;
@@ -386,9 +389,9 @@ export function initAudio(): void {
       return;
     }
     const comp = ctx.createDynamicsCompressor();
-    comp.threshold.value = -16;
+    comp.threshold.value = -12;
     comp.knee.value = 10;
-    comp.ratio.value = 4;
+    comp.ratio.value = 8;
     comp.attack.value = 0.003;
     comp.release.value = 0.2;
     master = ctx.createGain();
@@ -404,7 +407,11 @@ export function initAudio(): void {
 }
 
 export function play(name: Sfx, opts?: { volume?: number; pan?: number; rate?: number }): void {
-  if (!ctx || ctx.state !== "running" || isMuted()) return;
+  if (!ctx || isMuted() || ctx.state === "closed") return;
+  if (ctx.state === "suspended") {
+    if (userSuspended) return;
+    void ctx.resume().catch(() => undefined);
+  }
   const gap = THROTTLE_MS[name];
   if (gap !== undefined) {
     const now = performance.now();
@@ -449,9 +456,11 @@ export function isMuted(): boolean {
 }
 
 export function suspendAudio(): void {
+  userSuspended = true;
   if (ctx && ctx.state === "running") void ctx.suspend().catch(() => undefined);
 }
 
 export function resumeAudio(): void {
+  userSuspended = false;
   if (ctx && ctx.state === "suspended") void ctx.resume().catch(() => undefined);
 }

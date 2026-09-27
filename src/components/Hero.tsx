@@ -3,7 +3,6 @@
 import Image from "next/image";
 import { motion, type Variants } from "framer-motion";
 import GlassShards from "@/components/GlassShards";
-import MotionTracker from "@/components/MotionTracker";
 import { missions } from "@/data/portfolio";
 
 const boot: Variants = {
@@ -121,15 +120,6 @@ export default function Hero() {
             ))}
           </dl>
         </motion.aside>
-      </motion.div>
-
-      <motion.div
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 1.1, duration: 0.6 }}
-        className="absolute bottom-8 right-6 z-10 hidden w-32 md:block lg:bottom-auto lg:right-8 lg:top-24"
-      >
-        <MotionTracker />
       </motion.div>
     </section>
   );

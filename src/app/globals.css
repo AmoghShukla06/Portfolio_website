@@ -162,11 +162,6 @@ label[for] {
   100% { transform: translateY(115vh) rotate(var(--rot-end, 360deg)); opacity: 0; }
 }
 
-/* Motion tracker sweep */
-@keyframes radar-sweep {
-  to { transform: rotate(360deg); }
-}
-
 @keyframes blip {
   0%, 100% { opacity: 0; transform: scale(0.6); }
   12%      { opacity: 1; transform: scale(1); }
@@ -188,7 +183,6 @@ label[for] {
   50%      { opacity: 0.35; }
 }
 
-.radar-sweep { animation: radar-sweep 3.2s linear infinite; }
 .radar-blip  { animation: blip 3.2s ease-out infinite; }
 .holo-on     { animation: holo-on 1.4s ease-out both; }
 .schem-pulse { animation: schem-pulse 2.4s ease-in-out infinite; }
@@ -196,7 +190,6 @@ label[for] {
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .glass-shard,
-  .radar-sweep,
   .radar-blip,
   .holo-on,
   .schem-pulse {
